@@ -1,3 +1,4 @@
+import { ClerkProvider } from '@clerk/nextjs'
 import Navbar from "@/components/layouts/Navbar";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
@@ -17,11 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={cn('min-h-screen antialiased grainy', inter.className)}>
-        <Navbar />
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={cn('min-h-screen antialiased grainy', inter.className)}>
+          <Navbar />
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
