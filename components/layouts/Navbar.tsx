@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Icons } from '../Icons'
 import { buttonVariants } from '../ui/button'
 import MaxWidthWrapper from '../MaxWidthWrapper'
-import { UserButton } from '@clerk/nextjs'
+import { SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
 import { Auth } from '@/lib/auth'
 
 export default async function Navbar() {
@@ -14,8 +14,28 @@ export default async function Navbar() {
                 <Link href='/'>Smart PDF</Link>
                 <div className='flex items-center space-x-4'>
                     <Link href='/pricing'>Pricing</Link>
-                    <UserButton afterSignOutUrl="/" />
-                    {!user ? <Link href='/sign-up' className={cn(buttonVariants({ size: "sm" }), "bg-orange-400")}>Get Started <Icons.RightArrow className='w-4 h-4 ml-2' /></Link> : null}
+                    {!user ?
+                        (
+                            <>
+                                <SignInButton>Sign in</SignInButton>
+                                <SignUpButton>
+                                    <button className={cn(buttonVariants({ size: "sm" }), "bg-orange-400")}>Get Started <Icons.RightArrow className='w-4 h-4 ml-2' /></button>
+                                </SignUpButton>
+                            </>
+                        )
+                        : (
+                            <>
+                                <Link
+                                    href='/dashboard'
+                                    className={buttonVariants({
+                                        variant: 'ghost',
+                                        size: 'sm',
+                                    })}>
+                                    Dashboard
+                                </Link>
+                                <UserButton afterSignOutUrl="/" />
+                            </>
+                        )}
                 </div>
             </MaxWidthWrapper>
         </nav>
