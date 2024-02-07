@@ -13,7 +13,7 @@ export default function page() {
         retryDelay: 500
     })
     if (status === "success") router.push(origin ? `/${origin}` : '/dashboard')
-    if (error?.data?.code === "UNAUTHORIZED") router.push('/sign-in')
+    if (error?.data?.code === "UNAUTHORIZED") router.push('https://glowing-shark-12.accounts.dev/sign-in')
     return (
         <div className='w-full mt-24 flex justify-center'>
             <div className='flex flex-col items-center gap-2'>

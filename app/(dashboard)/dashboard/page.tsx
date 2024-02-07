@@ -1,3 +1,4 @@
+import Dashboard from '@/components/Dashboard';
 import { db } from '@/db';
 import { Auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
@@ -14,7 +15,5 @@ export default async function page() {
     })
 
     if (!dbUser) redirect('/auth-callback?origin=dashboard')
-    return (
-        <div>{user?.emailAddresses[0]?.emailAddress}</div>
-    )
+    return <Dashboard />
 }
