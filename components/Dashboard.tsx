@@ -25,7 +25,7 @@ const Dashboard = () => {
     })
 
     return (
-        <main className='w-full max-w-7xl mx-auto flex flex-col gap-4 '>
+        <main className='w-full max-w-7xl mx-auto flex flex-col gap-4 px-6 '>
             <div className='w-full flex justify-between items-center border-b border-gray-200 p-10'>
                 <h2 className='text-3xl font-bold'>My Files</h2>
                 <UploadButton />
