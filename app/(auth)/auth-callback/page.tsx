@@ -1,10 +1,12 @@
 "use client"
+import { FC } from 'react'
 import { trpc } from '@/app/_trpc/client'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
 import { Loader2 } from 'lucide-react'
 
-export default function page() {
+const AuthCallBackPage: FC = () => {
+
     const router = useRouter()
     const searchParams = useSearchParams()
     const origin = searchParams.get('origin')
@@ -14,6 +16,7 @@ export default function page() {
     })
     if (status === "success") router.push(origin ? `/${origin}` : '/dashboard')
     if (error?.data?.code === "UNAUTHORIZED") router.push('https://glowing-shark-12.accounts.dev/sign-in')
+
     return (
         <div className='w-full mt-24 flex justify-center'>
             <div className='flex flex-col items-center gap-2'>
@@ -26,3 +29,4 @@ export default function page() {
         </div>
     )
 }
+export default AuthCallBackPage
