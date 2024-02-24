@@ -15,7 +15,7 @@ const AuthCallBackPage: FC = () => {
         retryDelay: 500
     })
     if (status === "success") router.push(origin ? `/${origin}` : '/dashboard')
-    if (error?.data?.code === "UNAUTHORIZED") router.push('https://glowing-shark-12.accounts.dev/sign-in')
+    if (error?.data?.code === "UNAUTHORIZED") router.push(process.env.CLERK_SIGN_IN_URL!)
 
     return (
         <div className='w-full mt-24 flex justify-center'>
