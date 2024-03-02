@@ -82,56 +82,62 @@ export const appRouter = router({
         if (!file) throw new TRPCError({ code: 'NOT_FOUND' })
         return file
     }),
-    createStripeSession: privateProcedure.mutation(async ({ ctx }) => {
-        const { userId } = ctx
-        const billingUrl = 'https://smart-friend-pdf.vercel.app/dashboard/billing'
+    createStripeSession: privateProcedure.mutation(
+        async ({ ctx }) => {
+            const { userId } = ctx
 
-        if (!userId) throw new TRPCError({ code: 'UNAUTHORIZED' })
+            const billingUrl = absoluteUrl('/dashboard/billing')
 
-        const dbUser = await db.user.findFirst({
-            where: {
-                id: userId
+            if (!userId)
+                throw new TRPCError({ code: 'UNAUTHORIZED' })
+
+            const dbUser = await db.user.findFirst({
+                where: {
+                    id: userId,
+                },
+            })
+
+            if (!dbUser)
+                throw new TRPCError({ code: 'UNAUTHORIZED' })
+
+            const subscriptionPlan =
+                await getUserSubscriptionPlan()
+
+            if (
+                subscriptionPlan.isSubscribed &&
+                dbUser.stripeCustomerId
+            ) {
+                const stripeSession =
+                    await stripe.billingPortal.sessions.create({
+                        customer: dbUser.stripeCustomerId,
+                        return_url: billingUrl,
+                    })
+
+                return { url: stripeSession.url }
             }
-        })
-        if (!dbUser) throw new TRPCError({ code: 'UNAUTHORIZED' })
 
-        const subscriptionPlan = await getUserSubscriptionPlan();
-
-        if (
-            subscriptionPlan.isSubscribed &&
-            dbUser.stripeCustomerId
-        ) {
             const stripeSession =
-                await stripe.billingPortal.sessions.create({
-                    customer: dbUser.stripeCustomerId,
-                    return_url: billingUrl,
+                await stripe.checkout.sessions.create({
+                    success_url: billingUrl,
+                    cancel_url: billingUrl,
+                    payment_method_types: ['card', 'paypal'],
+                    mode: 'subscription',
+                    billing_address_collection: 'auto',
+                    line_items: [
+                        {
+                            price: PLANS.find(
+                                (plan) => plan.name === 'Pro'
+                            )?.price.priceIds.test,
+                            quantity: 1,
+                        },
+                    ],
+                    metadata: {
+                        userId: userId,
+                    },
                 })
 
             return { url: stripeSession.url }
         }
-
-        const stripeSession =
-            await stripe.checkout.sessions.create({
-                success_url: billingUrl,
-                cancel_url: billingUrl,
-                payment_method_types: ['card', 'paypal'],
-                mode: 'subscription',
-                billing_address_collection: 'auto',
-                line_items: [
-                    {
-                        price: PLANS.find(
-                            (plan) => plan.name === 'Pro'
-                        )?.price.priceIds.test,
-                        quantity: 1,
-                    },
-                ],
-                metadata: {
-                    userId: userId,
-                },
-            })
-
-        return { url: stripeSession.url }
-    }
     ),
     getFileMessages: privateProcedure.input(z.object({
         limit: z.number().min(1).max(100).nullish(),
