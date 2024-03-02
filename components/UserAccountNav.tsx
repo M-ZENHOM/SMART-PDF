@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu'
 import { Avatar, AvatarFallback } from './ui/avatar'
@@ -8,6 +9,7 @@ import { SignOutButton } from '@clerk/nextjs'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from './ui/button'
 import type { getUserSubscriptionPlan } from '@/lib/stripe'
+import { useRouter } from 'next/navigation'
 
 interface UserAccount {
     email: string
@@ -17,6 +19,7 @@ interface UserAccount {
 }
 
 function UserAccountNav({ email, name, imgUrl, Supscription }: UserAccount) {
+    const router = useRouter();
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -40,7 +43,7 @@ function UserAccountNav({ email, name, imgUrl, Supscription }: UserAccount) {
                         Manage Account <Settings className='w-4 h-4 text-zinc-900 mx-1' />
                     </Link>
                 </DropdownMenuItem>
-                {Supscription.isSubscribed ?
+                {Supscription?.isSubscribed ?
                     <DropdownMenuItem>
                         <Link className='w-full' href='/dashboard/billing'>Manage Subscription</Link>
                     </DropdownMenuItem>
@@ -51,7 +54,7 @@ function UserAccountNav({ email, name, imgUrl, Supscription }: UserAccount) {
                     </DropdownMenuItem>}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className={cn(buttonVariants({ variant: "default", size: "sm" }), "w-full")}>
-                    <SignOutButton />
+                    <SignOutButton signOutCallback={() => router.push('/')} />
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
