@@ -22,8 +22,8 @@ function UserAccountNav({ email, name, imgUrl, Supscription }: UserAccount) {
             <DropdownMenuTrigger asChild>
                 {imgUrl ?
                     <Avatar className="w-8 h-8 cursor-pointer" >
-                        <div className='w-full h-full aspect-auto'>
-                            <Image fill src={imgUrl} alt='profile picture' />
+                        <div className='w-full h-full relative aspect-square'>
+                            <Image fill src={imgUrl} alt='profile picture' referrerPolicy='no-referrer' />
                         </div>
                     </Avatar>
                     : <AvatarFallback><span className='sr-only'>{name}</span></AvatarFallback>}

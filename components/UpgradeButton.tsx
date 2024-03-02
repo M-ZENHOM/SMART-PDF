@@ -1,12 +1,12 @@
 "use client"
 
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Loader2 } from 'lucide-react'
 import { Button } from './ui/button'
 import { trpc } from '@/app/_trpc/client'
 
 const UpgradeButton = () => {
 
-    const { mutate: createStripeSession } = trpc.createStripeSession.useMutation({
+    const { mutate: createStripeSession, isPending } = trpc.createStripeSession.useMutation({
         onSuccess: ({ url }) => {
             window.location.href = url ?? "/dashboard/billing"
         }
@@ -14,6 +14,9 @@ const UpgradeButton = () => {
 
     return (
         <Button onClick={() => createStripeSession()} className='w-full'>
+            {isPending ? (
+                <Loader2 className='h-4 w-4 animate-spin mr-4' />
+            ) : null}
             Upgrade now <ArrowRight className='h-5 w-5 ml-1.5' />
         </Button>
     )

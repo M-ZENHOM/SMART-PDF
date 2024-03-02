@@ -4,7 +4,7 @@ import { Auth } from '@/lib/auth';
 import { db } from '@/db';
 import { z } from 'zod'
 import { INFINITE_QUERY_LIMIT } from '@/app/config/inifinte-query';
-import { absluteUrl } from '@/lib/utils';
+import { absoluteUrl } from '@/lib/utils';
 import { getUserSubscriptionPlan, stripe } from '@/lib/stripe';
 import { PLANS } from '@/app/config/stripe';
 
@@ -84,7 +84,7 @@ export const appRouter = router({
     }),
     createStripeSession: privateProcedure.mutation(async ({ ctx }) => {
         const { userId } = ctx
-        const billingUrl = absluteUrl('/dashboard/billing')
+        const billingUrl = 'https://smart-friend-pdf.vercel.app/dashboard/billing'
 
         if (!userId) throw new TRPCError({ code: 'UNAUTHORIZED' })
 

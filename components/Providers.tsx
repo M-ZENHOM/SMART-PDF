@@ -1,6 +1,6 @@
 "use client"
 import { trpc } from '@/app/_trpc/client'
-import { absluteUrl } from '@/lib/utils'
+import { absoluteUrl } from '@/lib/utils'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink } from '@trpc/client'
 import React, { useState } from 'react'
@@ -10,7 +10,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     const [trpcClient] = useState(() => trpc.createClient({
         links: [
             httpBatchLink({
-                url: absluteUrl('/api/trpc'),
+                url: absoluteUrl('/api/trpc'),
             })
         ]
     }))
