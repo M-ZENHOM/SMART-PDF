@@ -7,8 +7,9 @@ import { Skeleton } from './ui/skeleton'
 import Link from 'next/link'
 import { formatTime } from '@/lib/utils'
 import { Button } from './ui/button'
+import { getUserSubscriptionPlan } from '@/lib/stripe'
 
-const Dashboard = () => {
+const Dashboard = ({ subscriptionPlan }: { subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>> }) => {
     const [isDeletingFile, setIsDeletingFile] = useState<string | null>(null)
     const uilts = trpc.useUtils()
     const { data: files, isLoading } = trpc.getUserFile.useQuery()
@@ -28,7 +29,7 @@ const Dashboard = () => {
         <main className='w-full max-w-7xl mx-auto flex flex-col gap-4 px-6 '>
             <div className='w-full flex justify-between items-center border-b border-gray-200 p-10'>
                 <h2 className='text-3xl font-bold'>My Files</h2>
-                <UploadButton />
+                <UploadButton isSubscribed={subscriptionPlan.isSubscribed} />
             </div>
 
             {files && files.length > 0 ? (

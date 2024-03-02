@@ -1,6 +1,7 @@
 import Dashboard from '@/components/Dashboard';
 import { db } from '@/db';
 import { Auth } from '@/lib/auth';
+import { getUserSubscriptionPlan } from '@/lib/stripe';
 import { redirect } from 'next/navigation';
 import React from 'react'
 
@@ -15,5 +16,7 @@ export default async function page() {
     })
 
     if (!dbUser) redirect('/auth-callback?origin=dashboard')
-    return <Dashboard />
+
+    const subscriptionPlan = await getUserSubscriptionPlan()
+    return <Dashboard subscriptionPlan={subscriptionPlan} />
 }

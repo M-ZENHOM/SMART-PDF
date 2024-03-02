@@ -11,7 +11,7 @@ import { trpc } from '@/app/_trpc/client'
 import { useRouter } from 'next/navigation'
 
 
-const UploadButton = () => {
+const UploadButton = ({ isSubscribed }: { isSubscribed: boolean }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
     return (
         <Dialog
@@ -26,7 +26,7 @@ const UploadButton = () => {
             </DialogTrigger>
 
             <DialogContent>
-                <UploadDragZone />
+                <UploadDragZone isSubscribed={isSubscribed} />
             </DialogContent>
 
         </Dialog>
@@ -34,12 +34,14 @@ const UploadButton = () => {
 }
 
 
-const UploadDragZone = () => {
+const UploadDragZone = ({ isSubscribed }: { isSubscribed: boolean }) => {
     const router = useRouter()
     const [isUploading, setIsUploading] = useState(false)
     const [uploadProgress, setUploadProgress] = useState(0)
 
-    const { startUpload } = useUploadThing('pdfUploader')
+    const { startUpload } = useUploadThing(
+        isSubscribed ? 'proPlanUploader' : 'freePlanUploader',
+    )
 
     const { mutate: startPolling } = trpc.getFile.useMutation({
         onSuccess: (file) => {
@@ -93,7 +95,7 @@ const UploadDragZone = () => {
                         <p>Drag and drop files here,{" "}
                             <span className='font-semibold'>or click to select files</span>
                         </p>
-                        <p className='text-xs text-zinc-500'>PDF (up to 4MB)</p>
+                        <p className='text-xs text-zinc-500'>PDF (up to {isSubscribed ? '16' : '4'}MB)</p>
                         {acceptedFiles && acceptedFiles[0] ? (
                             <div className='max-w-xs bg-white flex  items-center rounded-lg overflow-hidden outline outline-[1px] outline-zinc-200 divide-x divide-zinc-200'>
                                 <div className='px-3 py-2 h-full'>
