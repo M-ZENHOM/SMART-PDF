@@ -9,7 +9,7 @@ import { SignOutButton } from '@clerk/nextjs'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from './ui/button'
 import type { getUserSubscriptionPlan } from '@/lib/stripe'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 interface UserAccount {
     email: string
@@ -20,9 +20,18 @@ interface UserAccount {
 
 function UserAccountNav({ email, name, imgUrl, Supscription }: UserAccount) {
     const router = useRouter();
+    const [isOpen, setIsOpen] = React.useState(false)
+    const pathName = usePathname()
+    const closeOnNav = (href: string) => {
+        pathName !== href && setIsOpen(false)
+    }
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+        <DropdownMenu open={isOpen} onOpenChange={(v) => {
+            if (!v) {
+                setIsOpen(v)
+            }
+        }}>
+            <DropdownMenuTrigger asChild onClick={() => setIsOpen(true)}>
                 {imgUrl ?
                     <Avatar className="w-8 h-8 cursor-pointer" >
                         <div className='w-full h-full relative aspect-square'>
@@ -35,19 +44,19 @@ function UserAccountNav({ email, name, imgUrl, Supscription }: UserAccount) {
                 <DropdownMenuLabel>{name}</DropdownMenuLabel>
                 <DropdownMenuItem>{email}</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => closeOnNav('/dashboard')} >
                     <Link className='w-full' href='/dashboard'>Dashboard</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => closeOnNav('/user-profile')} >
                     <Link className='flex items-center w-full' href="/user-profile"  >
                         Manage Account <Settings className='w-4 h-4 text-zinc-900 mx-1' />
                     </Link>
                 </DropdownMenuItem>
                 {Supscription?.isSubscribed ?
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => closeOnNav('/dashboard/billing')} >
                         <Link className='w-full' href='/dashboard/billing'>Manage Subscription</Link>
                     </DropdownMenuItem>
-                    : <DropdownMenuItem>
+                    : <DropdownMenuItem onClick={() => closeOnNav('/pricing')}>
                         <Link className='flex items-center w-full' href="/pricing">
                             Upgrade <Gem className='w-4 h-4 text-blue-900 mx-1' />
                         </Link>
