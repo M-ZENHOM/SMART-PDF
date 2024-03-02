@@ -20,8 +20,8 @@ export default function Home() {
             SMART PDF <br /> your fresh <span className="text-orange-400">confidant.</span>
           </h1>
           <p className="text-muted-foreground text-lg">
-            It{'&apos'}s not just reading anymore,
-            it{'&apos'}s a conversation
+            It&apos;s not just reading anymore,
+            it&apos;s a conversation
           </p>
           <Link href="/sign-up" className={cn(buttonVariants({ size: "lg" }), "bg-orange-400")} >Upload Document <Icons.RightArrow className="w-4 h-4 ml-2" /></Link>
         </div>
