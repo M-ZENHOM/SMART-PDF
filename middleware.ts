@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 export default authMiddleware({
     publicRoutes: ["/", "/api/uploadthing", "/pricing"],
+    ignoredRoutes: ["/api/webhooks/stripe"],
     afterAuth(auth, req, evt) {
         if (!auth.userId && !auth.isPublicRoute) {
             return redirectToSignIn({ returnBackUrl: req.url });
