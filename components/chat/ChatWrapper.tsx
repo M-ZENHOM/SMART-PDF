@@ -22,8 +22,8 @@ function ChatWrapper({ fileId }: ChatWrapperProps) {
 
   if (isLoading) {
     return (
-      <div className="relative  bg-zinc-50 flex divide-y divide-zinc-200 flex-col justify-between gap-2">
-        <div className="flex flex-col items-center gap-2 my-52">
+      <div className="relative md:min-h-[93vh] bg-zinc-50 flex divide-y divide-zinc-200 flex-col justify-between gap-2">
+        <div className="md:min-h-[85vh] flex flex-col items-center justify-center gap-2 ">
           <Loader2 className="h-8 w-8 text-blue-500 animate-spin" />
           <h3 className="font-semibold text-xl">Loading...</h3>
           <p className="text-zinc-500 text-sm">
@@ -37,8 +37,8 @@ function ChatWrapper({ fileId }: ChatWrapperProps) {
 
   if (data?.status === "PROCESSING") {
     return (
-      <div className="flex flex-col justify-center items-center gap-1 w-full py-20 lg:py-0 ">
-        <div className="flex flex-col items-center gap-2 my-52">
+      <div className="flex flex-col justify-center items-center gap-1 w-full md:min-h-[93vh]  ">
+        <div className="flex flex-col items-center justify-center gap-2 md:min-h-[85vh]">
           <Loader2 className="h-6 w-6 animate-spin text-blue-500" />
           <h3 className="font-semibold text-xl">Processing PDF....</h3>
           <p className="text-zinc-500 text-sm">This won&apos;t take long.</p>
@@ -50,11 +50,11 @@ function ChatWrapper({ fileId }: ChatWrapperProps) {
 
   if (data?.status === "FAILED") {
     return (
-      <div className="flex flex-col justify-center items-center gap-1  w-full  my-52 ">
+      <div className="flex flex-col justify-center items-center gap-1 w-full md:min-h-[93vh] ">
         <XCircle className="h-8 w-8 text-red-500" />
         <h3 className="font-semibold text-xl">Too many pages in PDF</h3>
         <p className="text-zinc-500 text-sm">
-          Yout plan supports up to 3 pages.
+          Your plan supports up to 3 pages.
         </p>
         <Link
           href="/dashboard"
