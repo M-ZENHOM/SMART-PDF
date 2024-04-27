@@ -31,7 +31,7 @@ Technologies used in the project:
 
 <h2>Project Screenshots:</h2>
 
-<img src="https://i.postimg.cc/3rfP8bJZ/1.png" alt="project-screenshot" width="500" height="700/">
+<img src="https://i.postimg.cc/3rfP8bJZ/1.png" alt="project-screenshot" width="600" height="600/">
 
 <img src="https://i.postimg.cc/MGmYmwVy/2.png" alt="project-screenshot" width="400" height="400/">
 
