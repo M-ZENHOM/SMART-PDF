@@ -33,14 +33,14 @@ Technologies used in the project:
 
 <img src="https://i.postimg.cc/3rfP8bJZ/1.png" alt="project-screenshot" width="800" height="400/">
 
-<img src="https://i.postimg.cc/MGmYmwVy/2.png" alt="project-screenshot" width="400" height="400/">
+<img src="https://i.postimg.cc/MGmYmwVy/2.png" alt="project-screenshot" width="800" height="400/">
 
-<img src="https://i.postimg.cc/BvSFsKPK/3.png" alt="project-screenshot" width="400" height="400/">
+<img src="https://i.postimg.cc/BvSFsKPK/3.png" alt="project-screenshot" width="800" height="400/">
 
-<img src="https://i.postimg.cc/NLvyn9wL/5.png" alt="project-screenshot" width="400" height="400/">
+<img src="https://i.postimg.cc/NLvyn9wL/5.png" alt="project-screenshot" width="800" height="400/">
 
-<img src="https://i.postimg.cc/fTvYVsnX/7.png" alt="project-screenshot" width="400" height="400/">
+<img src="https://i.postimg.cc/fTvYVsnX/7.png" alt="project-screenshot" width="800" height="400/">
 
-<img src="https://i.postimg.cc/vZq9vvmZ/9.png" alt="project-screenshot" width="400" height="400/">
+<img src="https://i.postimg.cc/vZq9vvmZ/9.png" alt="project-screenshot" width="800" height="400/">
 
   
